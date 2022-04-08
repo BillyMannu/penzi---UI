@@ -8,6 +8,8 @@ function Describe() {
   const [data, setData] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const endpoint_api = process.env.REACT_APP_endpoint_api;
+
   const number = getFromLocal('phone_number');
   const navigate = useNavigate();
 
@@ -22,7 +24,7 @@ function Describe() {
     let message = Object.values(postObj5).join('');
 
     axios
-      .post('http://localhost:5000/penzi', { number, message })
+      .post(endpoint_api, { number, message })
       .then((res) => {
         setData(res.data);
       })

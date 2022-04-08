@@ -9,6 +9,7 @@ function Myself() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const number = getFromLocal('phone_number');
+  const endpoint_api = process.env.REACT_APP_endpoint_api;
 
   const navigate = useNavigate();
   const [postObj3, setPostObj3] = useState({
@@ -22,7 +23,7 @@ function Myself() {
     let message = Object.values(postObj3).join(' ');
     console.log(message);
     axios
-      .post('http://localhost:5000/penzi', { message, number })
+      .post(endpoint_api, { message, number })
       .then((res) => {
         setData(res.data);
 

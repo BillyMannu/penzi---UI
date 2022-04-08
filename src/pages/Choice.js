@@ -8,8 +8,9 @@ function Choice() {
   const [data, setData] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const endpoint_api = process.env.REACT_APP_endpoint_api;
   const number = getFromLocal('phone_number');
-
+  
   const [message, setmessage] = useState('');
   const navigate = useNavigate();
 
@@ -18,7 +19,7 @@ function Choice() {
     setLoading(true);
 
     axios
-      .post('http://localhost:5000/penzi', { number, message })
+      .post(endpoint_api, { number, message })
       .then((res) => {
         setData(res.data);
 

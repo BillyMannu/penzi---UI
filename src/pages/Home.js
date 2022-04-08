@@ -8,6 +8,7 @@ function Home() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const endpoint_api = process.env.REACT_APP_endpoint_api;
 
   const [postObj, setPostObj] = useState({
     message: "penzi",
@@ -19,7 +20,7 @@ function Home() {
     event.preventDefault();
     setLoading(true);
     axios
-      .post("http://localhost:5000/penzi", postObj)
+      .post(endpoint_api, postObj)
       .then((res) => {
         setData(res.data);
 
@@ -35,6 +36,8 @@ function Home() {
       });
   };
   console.log(postObj);
+  console.log(endpoint_api)
+
 
   if (error) return <div>Error!</div>;
   if (loading) return <div>Loading... </div>;

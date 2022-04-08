@@ -9,6 +9,7 @@ function Specifics() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const number = getFromLocal('phone_number');
+  const endpoint_api = process.env.REACT_APP_endpoint_api;
 
   const [postObj2, setPostObj2] = useState({
     keyword: 'details',
@@ -25,7 +26,7 @@ function Specifics() {
     let message = Object.values(postObj2).join('#');
 
     axios
-      .post('http://localhost:5000/penzi', { number, message })
+      .post(endpoint_api, { number, message })
       .then((res) => {
         setData(res.data);
         // window.location.href = './Myself';

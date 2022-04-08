@@ -10,6 +10,7 @@ function Match() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const number = getFromLocal('phone_number');
+  const endpoint_api = process.env.REACT_APP_endpoint_api;
   const navigate = useNavigate();
 
   const [postObj4, setpostObj4] = useState({
@@ -28,7 +29,7 @@ function Match() {
 
     console.log(message);
     axios
-      .post('http://localhost:5000/penzi', { number, message })
+      .post(endpoint_api, { number, message })
       .then((res) => {
         setData(res.data);
         console.log(res.data);

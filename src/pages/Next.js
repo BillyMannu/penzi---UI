@@ -7,6 +7,7 @@ function Next() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const endpoint_api = process.env.REACT_APP_endpoint_api;
   const number = getFromLocal("phone_number");
   const match = getFromLocal("message")
 
@@ -29,7 +30,7 @@ function Next() {
     // let message = Object.values(postObj4).join('#')
     console.log(message);
     axios
-      .post("http://localhost:5000/penzi", { number, message })
+      .post(endpoint_api, { number, message })
       .then((res) => {
         setData(res.data);
 
