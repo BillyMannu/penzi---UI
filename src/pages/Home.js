@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../index.css";
 import { storeLocal } from "../util/utils";
+import { responsivePropType } from "react-bootstrap/esm/createUtilityClasses";
 
 function Home() {
   const [data, setData] = useState(null);
@@ -23,8 +24,14 @@ function Home() {
       .post(endpoint_api, postObj)
       .then((res) => {
         setData(res.data);
+        try {
+          navigate("/Registration");
+          alert("Number received, proceed to register");
+        } catch (e) {
+          console.log(e);
+          alert("Sorry,Could not process your data");
+        }
 
-        navigate("/Login");
         storeLocal("phone_number", postObj.number);
       })
       .catch((err) => {
@@ -36,8 +43,6 @@ function Home() {
       });
   };
   console.log(postObj);
-  console.log(endpoint_api)
-
 
   if (error) return <div>Error!</div>;
   if (loading) return <div>Loading... </div>;

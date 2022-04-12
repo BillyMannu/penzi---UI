@@ -29,7 +29,6 @@ function Specifics() {
       .post(endpoint_api, { number, message })
       .then((res) => {
         setData(res.data);
-        // window.location.href = './Myself';
         navigate('/Myself');
       })
       .catch((err) => {
@@ -109,21 +108,14 @@ function Specifics() {
         type='button'
         className='btn'
         id='previous'
-        onClick={(event) => navigate('/')}
+        onClick={(event) => navigate('/Registration')}
       >
         Previous
       </button>
       <button type='submit' className='btn' id='submit'>
         Submit
       </button>
-      {/* <button
-        type="button"
-        className="btn"
-        id="next"
-        onClick={(event) => (window.location.href = "./Myself")}
-      >
-        Next
-      </button> */}
+      
     </form>
   );
 }

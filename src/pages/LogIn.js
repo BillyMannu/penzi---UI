@@ -1,40 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../index.css";
-import { getFromLocal } from "../util/utils";
+import { storeLocal } from "../util/utils";
+import { responsivePropType } from "react-bootstrap/esm/createUtilityClasses";
 
-function LogIn() {
+function Home() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);  
+  const [error, setError] = useState(null);
   const endpoint_api = process.env.REACT_APP_endpoint_api;
-  const number = getFromLocal("phone_number");
 
-  const [postObj1, setPostObj1] = useState({
-    keyword: "start",
-    name: "",
-    sex: "",
-    dateOfBirth: "",
-    province: "",
-    town: "",
+  const [postObj, setPostObj] = useState({
+    message: "penzi",
+    number: "",
   });
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     setLoading(true);
-    let message = Object.values(postObj1).join("#");
-
     axios
-      .post(endpoint_api, { number, message })
+      .post(endpoint_api, postObj)
       .then((res) => {
-        // data = res.stringify(data);
-        console.log(res);
         setData(res.data);
+        try {
+          navigate("/Registration");
+          alert("Number received, proceed to register");
+        } catch (e) {
+          console.log(e);
+          alert("Sorry,Could not process your data");
+        }
 
-        // window.location.href = './Specifics';
-        navigate("/specifics");
+        storeLocal("phone_number", postObj.number);
       })
       .catch((err) => {
         setError(err.message);
@@ -44,106 +42,43 @@ function LogIn() {
         setLoading(false);
       });
   };
-  console.log(postObj1);
+  console.log(postObj);
 
   if (error) return <div>Error!</div>;
-  if (loading) return <div>Loading ...</div>;
+  if (loading) return <div>Loading... </div>;
 
-  const handleLoginData = (event) => {
+  const handleLogInData = (event) => {
     const { name, value } = event.target;
-    setPostObj1((prevLoginState) => {
+    setPostObj((prevHomeData) => {
       return {
-        ...prevLoginState,
+        ...prevHomeData,
         [name]: value,
       };
     });
   };
   return (
-    <form className="card" onSubmit={handleSubmit}>
+    <div>
       <div>
-        <h2>Enter Your Credentials below</h2>
-      </div>
-      <div>
-        <label htmlFor="name">Name:</label>
         <input
           type="text"
-          name="name"
-          id="name"
-          value={postObj1.name}
-          placeholder="Name"
+          value={usename}
+          placeholder="Username"
+          id="username"
           required
-          onChange={handleLoginData}
+          onChange={handleLogInData}
         />
       </div>
-      <label htmlFor="sex">Pick your gender:</label>
-      <select name="sex" id="choice" required onChange={handleLoginData}>
-        <option value="" disabled selected hidden>
-          Gender
-        </option>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
-        <option value="PreferNotToSay">Prefer Not To Say</option>
-      </select>
-
       <div>
-        <label htmlFor="date">Date of birth</label>
-        <input
-          name="dateOfBirth"
-          value={postObj1.dateOfBirth}
-          type="date"
-          min="1942-01-01"
-          max="2004-12-31"
-          onChange={handleLoginData}
-        />
-      </div>
-
-      <div>
-        <label htmlFor="choice">Province:</label>
-        <select
-          id="choice"
-          name="province"
-          onChange={handleLoginData}
-          value={postObj1.province}
-        >
-          <option value="" disabled selected hidden>
-            Province
-          </option>
-          <option value="Nairobi">Nairobi</option>
-          <option value="Nyanza">Nyanza</option>
-          <option value="Central">Central</option>
-          <option value="Western">Western</option>
-          <option value="Coast">Coast</option>
-          <option value="Eastern">Eastern</option>
-          <option value="Rift Valley">Rift Valley</option>
-          <option value="North Eastern">North Eastern</option>
-        </select>
-      </div>
-
-      <div>
-        <label htmlFor="town">Town:</label>
         <input
           type="text"
-          name="town"
-          id="town"
-          placeholder="Town"
-          value={postObj1.town}
+          value={password}
+          placeholder="password"
+          id="password"
           required
-          onChange={handleLoginData}
+          onChange={handleLogInData}
         />
       </div>
-      <button
-        type="button"
-        className="btn"
-        id="previous"
-        onClick={(event) => (window.location.href = "./")}
-      >
-        Previous
-      </button>
-      <button type="submit" className="btn" id="submit" onSubmit={handleSubmit}>
-        Submit
-      </button>
-    </form>
+    </div>
   );
 }
-
-export default LogIn;
+export default Home;

@@ -327,3 +327,11 @@ li a:hover:not(.active) {
 .active {
   background-color: #04aa6d;
 }
+#page1 {
+  background-color: white;
+  color: black;
+}
+.page1 {
+  background-color: white;
+  color: black;
+}

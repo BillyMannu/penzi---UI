@@ -18,9 +18,14 @@ const Layout = () => {
                 Home
               </Nav.Link>
             </li>
+            {/* <li>
+              <Nav.Link as={Link} to={"/Page1"}>
+                page1
+              </Nav.Link>
+            </li> */}
             <li>
-              <Nav.Link as={Link} to={"/LogIn"}>
-                LogIn
+              <Nav.Link as={Link} to={"/Registration"}>
+                Registration
               </Nav.Link>
             </li>
             <li>
