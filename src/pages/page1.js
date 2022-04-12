@@ -41,7 +41,7 @@ function Page1() {
   if (error) return <div>Error!</div>;
   if (loading) return <div>Loading... </div>;
 
-  const signIn = (event) => {
+  const LogIn = (event) => {
     event.preventDefault();
     setLoading(true);
     axios
@@ -49,7 +49,7 @@ function Page1() {
       .then((res) => {
         setData(res.data);
         try {
-          navigate("/signIn");
+          navigate("/LogIn");
           //   alert("Number received, proceed to register");
         } catch (e) {
           console.log(e);
@@ -99,7 +99,7 @@ function Page1() {
                 type="button"
                 className="btn"
                 id="signIn"
-                onClick={signIn}
+                onClick={LogIn}
               >
                 SIGN IN
               </button>
